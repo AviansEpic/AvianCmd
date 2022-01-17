@@ -6,19 +6,25 @@ local autoloadconfig = false
 local noclip = false
 local chatlogs = false
 
-local config = game:GetService("HttpService"):JSONDecode(readfile('avian_config.json'))
-if config.autoloadconfig then
-    if config.prefix then
-        prefix = config.prefix 
-    end
-    if config.saycmds then
-        saycmds = config.saycmds
-    end
+if isfile("avian_config.json") then
+    local config = game:GetService("HttpService"):JSONDecode(readfile('avian_config.json'))
     if config.autoloadconfig then
-        autoloadconfig = config.autoloadconfig
-    end
+        if config.prefix then
+            prefix = config.prefix 
+        end
+        if config.saycmds then
+            saycmds = config.saycmds
+        end
+        if config.autoloadconfig then
+            autoloadconfig = config.autoloadconfig
+        end
 
-    print("Loaded config!")
+        print("Loaded config!")
+    end
+else
+    print("Config does not exist! Creating config now...")
+    writefile("avian_config.json",'{"prefix": ";", "saycmds": true, "autoloadconfig": false}')
+    print("Config created!")
 end
 
 local mouse = game.Players.LocalPlayer:GetMouse()
